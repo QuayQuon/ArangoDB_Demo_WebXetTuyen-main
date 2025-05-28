@@ -22,6 +22,13 @@ FOR f IN FormXetTuyen_NganhHoc
   FOR n IN NganhHoc
     FILTER n._id == f._to
     RETURN {
-      tenNganh: n.TenNganhHoc,  // hoặc `n.TenNganhHoc` nếu tên trường là vậy
+      tenNganh: n.TenNganhHoc, 
       nganhId: n._id
+    }
+//lấy ngành theo form
+FOR form IN FormXetTuyen
+  FOR nganh IN OUTBOUND form FormXetTuyen_NganhHoc
+    RETURN {
+      form: form,
+      nganh: nganh.TenNganhHoc
     }

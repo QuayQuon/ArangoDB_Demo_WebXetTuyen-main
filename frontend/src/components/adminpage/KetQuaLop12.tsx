@@ -25,12 +25,7 @@ interface FormWithNganh {
     nganh: string;
 }
 
-const truongMap: Record<string, string> = {
-    "3950": "Trường THPT Cà Mau",
-    "687": "Trường THPT ABC",
-    "456": "Trường THPT XYZ",
-    "1": "Trường THPT Hutech",
-};
+
 
 const KetQuaLop12 = () => {
     const [data, setData] = useState<FormWithNganh[]>([]);
@@ -40,17 +35,11 @@ const KetQuaLop12 = () => {
         axios
             .get("http://localhost:8000/admin/list-form-xet-tuyen")
             .then((res) => {
-                const updated: FormWithNganh[] = res.data.map((item: FormWithNganh) => ({
-                    ...item,
-                    form: {
-                        ...item.form,
-                        TenTruong: truongMap[item.form.MaTruong] || "Không xác định",
-                    },
-                }));
-                setData(updated);
+                setData(res.data);
             })
             .catch((err) => console.error(err));
     }, []);
+
 
     const genderLabel = (g: string) => (g === "1" ? "Nam" : "Nữ");
     const duHocLabel = (val: string) => (val === "1" ? "Có" : "Không");
